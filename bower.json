@@ -1,0 +1,32 @@
+{
+  "name": "bt-cal-grid",
+  "version": "0.0.1",
+  "authors": [
+    "Tyler Beatty <tbeatty.sk@gmail.com>"
+  ],
+  "description": "An element that places a list of bt-cal-date items into a grid of weeks. There are some requirements placed on how the bt-cal-date items must be ordered. This is done automatically in the bt-calendar element.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed"
+  ],
+  "main": "seed-element.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "paper-material": "PolymerElements/paper-material",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*",
+    "bt-cal-date": "bt-cal-date#^0.0.1"
+  }
+}
