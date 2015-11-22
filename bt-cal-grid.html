@@ -60,12 +60,14 @@ Example:
     <div class="container" id="calendar">
       <div class="container" id="days-of-week">
         <template is="dom-repeat" items="[[daysOfWeek]]" as="name">
-          <paper-material id="day-of-week" elevation="1">
+          <paper-material on-click="_buildWeek" id="day-of-week" elevation="1">
             <h2> {{name}} </h2>
           </paper-material>
         </template>
+        <content id="contentNode"></content>
       </div>
     </div>
+    
   </template>
 
 </dom-module>
@@ -93,7 +95,8 @@ Example:
     },
 
     ready: function() {
-      this._buildWeek();
+      var boundHandler = this._buildWeek.bind(this); 
+      this._observer = Polymer.dom(this.$.contentNode).observeNodes(boundHandler);
     },
 
     //Creates the header with the days of the week. Dependant on wether Monday starts the week or if the weekends are hidden.
@@ -119,7 +122,9 @@ Example:
           week.appendChild(days[j]);
         }
         Polymer.dom(this.$["calendar"]).appendChild(week)
+        Polymer.dom.flush();
       }
+      //Polymer.dom(this.$["calendar"]).removeChild("week1");
     }
 
   });

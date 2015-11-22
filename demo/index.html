@@ -18,115 +18,185 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../bt-cal-grid.html">
   </head>
   <body>
-
-    <p>An example of <code>&lt;bt-cal-grid&gt;</code>:</p>
-
-    <bt-cal-grid>
-    <div>booger</div>
-        <bt-cal-date id="1">
-          <h1>1</h1>
-          <h2>First</h2>
-          <div></div>
-        </bt-cal-date id="2">
-         <bt-cal-date>
-          <h1>2</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>3</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>4</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>5</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>8</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>9</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>10</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>11</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>12</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-        <bt-cal-date>
-          <h1>15</h1>
-          <h2>First</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>16</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>17</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>18</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>19</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>23</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>24</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>25</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>26</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-         <bt-cal-date>
-          <h1>27</h1>
-          <h2>la</h2>
-          <div></div>
-        </bt-cal-date>
-    </bt-cal-grid>
-
+    <template id="page-template" is="dom-bind">
+      <p>An example of <code>&lt;bt-cal-grid&gt;</code>:</p>
+      <button on-click="c">Modify bt-cal-date</button>
+      <bt-cal-grid>
+        <template is="dom-repeat" items="{{days}}" as="d">
+          <bt-cal-date id="{{date}}">
+            <h1>{{d.day}}</h1>
+            <h2>{{d.title}}</h2>
+            <div>{{d.desc}}</div>
+          </bt-cal-date>
+        </template>
+      </bt-cal-grid>
+    </template>
     <script>
-
+    var template = document.querySelector('#page-template');
+    template.c = function(){ 
+      for(var i=0; i<this.days.length; i++){
+        this.set("days."+i+".day", this.days[i].day+1);
+      }
+      console.log(this.days[0]);
+     }
+    template.properties = {
+      days:{
+        type: Array,
+        notify: true,
+        value: [
+        {
+          "date": "2015-10-25T16:00:00.000Z",
+          "day": 26,
+          "time": 1445788800000
+        },
+        {
+          "date": "2015-10-26T16:00:00.000Z",
+          "day": 27,
+          "time": 1445875200000
+        },
+        {
+          "date": "2015-10-27T16:00:00.000Z",
+          "day": 28,
+          "time": 1445961600000
+        },
+        {
+          "date": "2015-10-28T16:00:00.000Z",
+          "day": 29,
+          "time": 1446048000000
+        },
+        {
+          "date": "2015-10-29T16:00:00.000Z",
+          "day": 30,
+          "time": 1446134400000
+        },
+        {
+          "date": "2015-11-01T16:00:00.000Z",
+          "day": 2,
+          "time": 1446393600000
+        },
+        {
+          "date": "2015-11-02T16:00:00.000Z",
+          "day": 3,
+          "time": 1446480000000
+        },
+        {
+          "date": "2015-11-03T16:00:00.000Z",
+          "day": 4,
+          "time": 1446566400000
+        },
+        {
+          "date": "2015-11-04T16:00:00.000Z",
+          "day": 5,
+          "time": 1446652800000
+        },
+        {
+          "date": "2015-11-05T16:00:00.000Z",
+          "day": 6,
+          "time": 1446739200000
+        },
+        {
+          "date": "2015-11-08T16:00:00.000Z",
+          "day": 9,
+          "time": 1446998400000
+        },
+        {
+          "date": "2015-11-09T16:00:00.000Z",
+          "day": 10,
+          "time": 1447084800000
+        },
+        {
+          "date": "2015-11-10T16:00:00.000Z",
+          "day": 11,
+          "time": 1447171200000
+        },
+        {
+          "date": "2015-11-11T16:00:00.000Z",
+          "day": 12,
+          "time": 1447257600000
+        },
+        {
+          "date": "2015-11-12T16:00:00.000Z",
+          "day": 13,
+          "time": 1447344000000
+        },
+        {
+          "date": "2015-11-15T16:00:00.000Z",
+          "day": 16,
+          "time": 1447603200000
+        },
+        {
+          "date": "2015-11-16T16:00:00.000Z",
+          "day": 17,
+          "time": 1447689600000
+        },
+        {
+          "date": "2015-11-17T16:00:00.000Z",
+          "day": 18,
+          "time": 1447776000000
+        },
+        {
+          "date": "2015-11-18T16:00:00.000Z",
+          "day": 19,
+          "time": 1447862400000
+        },
+        {
+          "date": "2015-11-19T16:00:00.000Z",
+          "day": 20,
+          "time": 1447948800000
+        },
+        {
+          "date": "2015-11-22T16:00:00.000Z",
+          "day": 23,
+          "time": 1448208000000
+        },
+        {
+          "date": "2015-11-23T16:00:00.000Z",
+          "day": 24,
+          "time": 1448294400000
+        },
+        {
+          "date": "2015-11-24T16:00:00.000Z",
+          "day": 25,
+          "time": 1448380800000
+        },
+        {
+          "date": "2015-11-25T16:00:00.000Z",
+          "day": 26,
+          "time": 1448467200000
+        },
+        {
+          "date": "2015-11-26T16:00:00.000Z",
+          "day": 27,
+          "time": 1448553600000
+        },
+        {
+          "date": "2015-11-29T16:00:00.000Z",
+          "day": 30,
+          "time": 1448812800000
+        },
+        {
+          "date": "2015-11-30T16:00:00.000Z",
+          "day": 1,
+          "time": 1448899200000
+        },
+        {
+          "date": "2015-12-01T16:00:00.000Z",
+          "day": 2,
+          "time": 1448985600000
+        },
+        {
+          "date": "2015-12-02T16:00:00.000Z",
+          "day": 3,
+          "time": 1449072000000
+        },
+        {
+          "date": "2015-12-03T16:00:00.000Z",
+          "day": 4,
+          "time": 1449158400000
+        }
+      ],
+    }
+  }
     </script>
 
   </body>
