@@ -8,8 +8,10 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../polymer/polymer.html">
+
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../neon-animation/neon-shared-element-animatable-behavior.html">
 
 <!--
 "An element that places a list of bt-cal-date items into a grid of weeks. There are some requirements placed on how the bt-cal-date items must be ordered. This is done automatically in the bt-calendar element."
@@ -28,17 +30,28 @@ Example:
 @demo
 -->
 <dom-module id="bt-cal-grid">
-
-  <style>
+  <style is="custom-style">
+    body {
+      
+    }
     :host {
       display: block;
-      box-sizing: border-box;
+    }
+    paper-material{
+      background-color: rgb(216,216,216);
     }
     #day-of-week {
       width: 100px;
+      margin-left: 5px;
+      margin-top: 10px;
     }
-    ::content h2{
+    h2#day-name{
       text-align: center;
+      font-size: 16px;
+      margin-right: 5px;
+      margin-top: 0px;
+      margin-bottom: 5px;
+      margin-left: 5px;
       color:#000000;
     }
     #days-of-week {
@@ -53,15 +66,23 @@ Example:
       @apply(--layout-vertical);
       @apply(--layout-center-justified);
     }
-
+     #fixed {
+        position: fixed;
+        background-color: rgb(120,138,138);
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+      }
   </style>
 
   <template>
-    <div class="container" id="calendar">
-      <div class="container" id="days-of-week">
+    <div id="fixed"></div>
+    <div id="calendar">
+      <div id="days-of-week">
         <template is="dom-repeat" items="[[daysOfWeek]]" as="name">
-          <paper-material on-click="_buildWeek" id="day-of-week" elevation="1">
-            <h2> {{name}} </h2>
+          <paper-material id="day-of-week" elevation="1">
+            <h2 id="day-name"> {{name}} </h2>
           </paper-material>
         </template>
         <content id="contentNode"></content>
@@ -77,8 +98,21 @@ Example:
   Polymer({
 
     is: 'bt-cal-grid',
-
-    properties: {
+    behaviors: [
+      Polymer.NeonSharedElementAnimatableBehavior],
+    properties: {  
+      animationConfig: {
+        value: function() {
+          return {
+           'exit': [
+            {
+              name: 'hero-animation',
+              id: 'hero',
+              fromPage: this
+            }]
+          }
+        }
+      },
       hideWeekends: {
           type: Boolean,
           value: true
@@ -93,12 +127,22 @@ Example:
         computed: '_setWeekDays(hideWeekends, mondayFirst)'
       },
     },
-
+    listeners:{
+        dateselected: '_onClick'
+    },
     ready: function() {
       var boundHandler = this._buildWeek.bind(this); 
       this._observer = Polymer.dom(this.$.contentNode).observeNodes(boundHandler);
     },
-
+    _onClick: function(event){
+      var target = event.target;
+      itemId= parseInt(target.id)+1;
+      this.sharedElements={
+        'ripple': target,
+        'hero': target
+      };
+      this.fire('cal-click',itemId)
+    },
     //Creates the header with the days of the week. Dependant on wether Monday starts the week or if the weekends are hidden.
    _setWeekDays: function(hideWeekends, mondayFirst) {
       if(hideWeekends){

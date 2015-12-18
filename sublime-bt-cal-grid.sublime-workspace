@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"bt-cal-",
+				"bt-cal-grid"
+			],
+			[
 				"build",
 				"_buildWeek"
 			],
@@ -39,7 +43,7 @@
 			"file": "bt-cal-grid.html",
 			"settings":
 			{
-				"buffer_size": 4044,
+				"buffer_size": 4032,
 				"line_ending": "Unix"
 			}
 		},
@@ -47,16 +51,8 @@
 			"file": "demo/index.html",
 			"settings":
 			{
-				"buffer_size": 5434,
+				"buffer_size": 5386,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/tbeat/Development/bt-cal/bt-cal.html",
-			"settings":
-			{
-				"buffer_size": 5976,
-				"line_ending": "Windows"
 			}
 		},
 		{
@@ -68,13 +64,10 @@
 			}
 		},
 		{
-			"contents": "{\n  \"name\": \"bt-cal-grid\",\n  \"version\": \"0.0.1\",\n  \"authors\": [\n    \"Tyler Beatty <tbeatty.sk@gmail.com>\"\n  ],\n  \"description\": \"An element that places a list of bt-cal-date items into a grid of weeks. There are some requirements placed on how the bt-cal-date items must be ordered. This is done automatically in the bt-calendar element.\",\n  \"keywords\": [\n    \"web-component\",\n    \"web-components\",\n    \"polymer\",\n    \"seed\"\n  ],\n  \"main\": \"seed-element.html\",\n  \"license\": \"http://polymer.github.io/LICENSE.txt\",\n  \"homepage\": \"https://github.com/<USERNAME>/seed-element/\",\n  \"ignore\": [\n    \"/.*\",\n    \"/test/\",\n    \"/demo/\"\n  ],\n  \"dependencies\": {\n    \"polymer\": \"Polymer/polymer#^1.2.0\",\n    \"paper-material\": \"PolymerElements/paper-material\",\n    \"iron-flex-layout\": \"PolymerElements/iron-flex-layout\"\n  },\n  \"devDependencies\": {\n    \"iron-component-page\": \"PolymerElements/iron-component-page#^1.0.0\",\n    \"web-component-tester\": \"*\",\n    \"bt-cal-date\": \"bt-cal-date#^0.0.1\"\n  }\n}\n",
 			"file": "bower.json",
-			"file_size": 988,
-			"file_write_time": 130925569310409056,
 			"settings":
 			{
-				"buffer_size": 988,
+				"buffer_size": 972,
 				"line_ending": "Unix"
 			}
 		}
@@ -125,11 +118,11 @@
 	"expanded_folders":
 	[
 		"/C/Users/tbeat/Development/bt-cal-grid",
-		"/C/Users/tbeat/Development/bt-cal-grid/bower_components/polymer",
 		"/C/Users/tbeat/Development/bt-cal-grid/demo"
 	],
 	"file_history":
 	[
+		"/C/Users/tbeat/Development/bt-cal/bt-cal.html",
 		"/C/Users/tbeat/Development/bt-cal/bower.json",
 		"/C/Users/tbeat/Development/bt-cal-grid/index.html",
 		"/C/Users/tbeat/Development/bt-cal-grid/bower.json",
@@ -141,13 +134,12 @@
 		"/C/Users/tbeat/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Users/tbeat/Development/bt-cal-date-temp/test/basic-test.html",
 		"/C/Users/tbeat/Development/bt-cal-date-temp/test/index.html",
-		"/C/Users/tbeat/Development/bt-cal/bt-cal.html",
 		"/C/Users/tbeat/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
 		"/C/Users/tbeat/Development/bt-cal-date/bt-cal-date/bower_components/polymer/polymer.html"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -180,7 +172,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -189,15 +181,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4044,
+						"buffer_size": 4032,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2329,
-								2329
+								2624,
+								2624
 							]
 						],
 						"settings":
@@ -208,10 +200,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1071.0,
+						"translation.y": 1296.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -220,15 +212,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5434,
+						"buffer_size": 5386,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1484,
-								1484
+								1390,
+								1390
 							]
 						],
 						"settings":
@@ -239,44 +231,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 260.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/tbeat/Development/bt-cal/bt-cal.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5976,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1469.0,
+						"translation.y": 292.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "bower_components/polymer/.bower.json",
 					"semi_transient": true,
 					"settings":
@@ -294,6 +256,7 @@
 						],
 						"settings":
 						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
 							"syntax": "Packages/JavaScript/JSON.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
@@ -306,20 +269,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "bower.json",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 988,
+						"buffer_size": 972,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								688,
-								688
+								972,
+								0
 							]
 						],
 						"settings":
@@ -333,7 +296,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

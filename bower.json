@@ -8,12 +8,11 @@
   "keywords": [
     "web-component",
     "web-components",
-    "polymer",
-    "seed"
+    "polymer"
   ],
-  "main": "seed-element.html",
+  "main": "bt-cal-grid.html",
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "homepage": "https://github.com/tbeattysk/bt-cal-grid",
   "ignore": [
     "/.*",
     "/test/",
