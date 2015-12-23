@@ -21,7 +21,8 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
     "paper-material": "PolymerElements/paper-material",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout"
+    "iron-flex-layout": "PolymerElements/iron-flex-layout",
+    "neon-animation": "PolymerElements/neon-animation"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

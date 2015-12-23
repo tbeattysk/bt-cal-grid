@@ -41,7 +41,7 @@ Example:
       background-color: rgb(216,216,216);
     }
     #day-of-week {
-      width: 100px;
+      width: 12vw;
       margin-left: 5px;
       margin-top: 10px;
     }
@@ -66,6 +66,10 @@ Example:
       @apply(--layout-vertical);
       @apply(--layout-center-justified);
     }
+    #title {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-justified);
+    }
      #fixed {
         position: fixed;
         background-color: rgb(120,138,138);
@@ -77,8 +81,15 @@ Example:
   </style>
 
   <template>
-    <div id="fixed"></div>
+    
+    <div id="title">
+        <button on-click="_prevMonth">Previous</button> 
+        {{data.month.month}}, {{data.month.year}} 
+        <button on-click="_nextMonth">Next</button> 
+        <input type="date" value="{{datePicker}}" on-change="_setDate"></input>
+      </div>
     <div id="calendar">
+      
       <div id="days-of-week">
         <template is="dom-repeat" items="[[daysOfWeek]]" as="name">
           <paper-material id="day-of-week" elevation="1">
@@ -100,7 +111,11 @@ Example:
     is: 'bt-cal-grid',
     behaviors: [
       Polymer.NeonSharedElementAnimatableBehavior],
-    properties: {  
+    properties: { 
+      data:{
+        type: Object,
+        notify: true,
+      },
       animationConfig: {
         value: function() {
           return {
@@ -113,26 +128,28 @@ Example:
           }
         }
       },
-      hideWeekends: {
-          type: Boolean,
-          value: true
-      },
-      mondayFirst: {
-          type: Boolean,
-          value: false,
-      },
-      //To o: Unnecessary property to data bind the display of sat-sun should be implemented imparitively with observers on properties. 
       daysOfWeek: {
-        type: Array,
-        computed: '_setWeekDays(hideWeekends, mondayFirst)'
+        type: Array
       },
     },
     listeners:{
-        dateselected: '_onClick'
+      dateselected: '_onClick'
     },
+
     ready: function() {
       var boundHandler = this._buildWeek.bind(this); 
       this._observer = Polymer.dom(this.$.contentNode).observeNodes(boundHandler);
+    },
+    _nextMonth: function(event){
+      this.fire('next-month');
+    },
+    _prevMonth: function(event){
+      this.fire('prev-month');
+    },
+    _setDate: function(event){
+      this.fire('set-date');
+      //console.log(event.srcElement.valueAsDate)
+      //this.$.localData.setDate(event.srcElement.valueAsDate);
     },
     _onClick: function(event){
       var target = event.target;
@@ -152,11 +169,11 @@ Example:
         return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
       }
        else return ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Satruday"]
-    },
-
+    },  
     //Builds the week assuming that all weeks are full and that the order of dates corresponds with the properties (no data is checked).
     _buildWeek: function(){
-      var days=this.queryAllEffectiveChildren("bt-cal-date");
+      this.daysOfWeek = this._setWeekDays(this.data.settings.hideWeekends, this.data.settings.mondayFirst)
+      var days=this.queryAllEffectiveChildren(".daysOfCal");
       daysInWeek = this.daysOfWeek.length;
       for(var i=0; i<Math.floor(days.length/daysInWeek) ;i++){
         var week = document.createElement("div");

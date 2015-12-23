@@ -21,9 +21,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template id="page-template" is="dom-bind">
       <p>An example of <code>&lt;bt-cal-grid&gt;</code>:</p>
       <button on-click="c">Modify bt-cal-date</button>
-      <bt-cal-grid>
+      <bt-cal-grid data={{data}}>
         <template is="dom-repeat" items="{{days}}" as="d">
-          <bt-cal-date id="{{date}}">
+          <bt-cal-date class="daysOfCal" id="{{date}}">
             <h1>{{d.day}}</h1>
             <h2>{{d.title}}</h2>
             <div>{{d.desc}}</div>
@@ -38,8 +38,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.set("days."+i+".day", this.days[i].day+1);
       }
       console.log(this.days[0]);
-     }
+     };
     template.properties = {
+      data:{
+        type: Object,
+        notify: true,
+        value:{
+          settings:{
+            hideWeekends: true,
+            mondayFirst: true
+          }
+        }
+      },
       days:{
         type: Array,
         notify: true,
