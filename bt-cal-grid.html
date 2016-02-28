@@ -11,7 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+
 
 <!--
 "An element that places a list of bt-cal-date items into a grid of weeks. There are some requirements placed on how the bt-cal-date items must be ordered. This is done automatically in the bt-calendar element."
@@ -38,7 +39,7 @@ Example:
       display: block;
     }
     paper-material{
-      background-color: rgb(216,216,216);
+      background-color: #B0BEC5;
     }
     #day-of-week {
       width: 12vw;
@@ -69,37 +70,48 @@ Example:
     #title {
       @apply(--layout-horizontal);
       @apply(--layout-center-justified);
+      width: 63vw;
+      margin-right: auto;
+      margin-left: auto;
     }
-     #fixed {
-        position: fixed;
-        background-color: rgb(120,138,138);
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-      }
+    #year{
+      width: 3em;
+      text-align: center;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    #month{
+      width: 4.5em;
+      text-align: center;
+      margin-right: auto;
+      margin-left: auto;
+    }
   </style>
 
   <template>
     
-    <div id="title">
-        <button on-click="_prevMonth">Previous</button> 
-        {{data.month.month}}, {{data.month.year}} 
-        <button on-click="_nextMonth">Next</button> 
-        <input type="date" value="{{datePicker}}" on-change="_setDate"></input>
-      </div>
+    <paper-material id="title">
+      <div on-click="_prevMonth"> <-- </div> 
+      <div id='month'>{{data.month.month}}</div>
+      <div on-click="_nextMonth"> --> </div> 
+      <span class="flex"></span>
+      <div on-click="_prevYear"> <-- </div> 
+      <div id='year'>{{data.month.year}}</div>
+      <div on-click="_nextYear"> --> </div> 
+    </paper-material>
     <div id="calendar">
-      
       <div id="days-of-week">
         <template is="dom-repeat" items="[[daysOfWeek]]" as="name">
           <paper-material id="day-of-week" elevation="1">
             <h2 id="day-name"> {{name}} </h2>
           </paper-material>
         </template>
-        <content id="contentNode"></content>
       </div>
+      <content id="contentNode" select=".dayElements"></content>
     </div>
-    
+    <paper-dialog id="detailDialog">
+      <content id="detailView" select=".detailElement"></content>
+    </paper-dialog>
   </template>
 
 </dom-module>
@@ -109,24 +121,12 @@ Example:
   Polymer({
 
     is: 'bt-cal-grid',
-    behaviors: [
-      Polymer.NeonSharedElementAnimatableBehavior],
+
     properties: { 
       data:{
         type: Object,
         notify: true,
-      },
-      animationConfig: {
-        value: function() {
-          return {
-           'exit': [
-            {
-              name: 'hero-animation',
-              id: 'hero',
-              fromPage: this
-            }]
-          }
-        }
+        observer: '_buildWeek',
       },
       daysOfWeek: {
         type: Array
@@ -137,8 +137,9 @@ Example:
     },
 
     ready: function() {
-      var boundHandler = this._buildWeek.bind(this); 
-      this._observer = Polymer.dom(this.$.contentNode).observeNodes(boundHandler);
+      
+      //detail.data = this.data.selected;
+      
     },
     _nextMonth: function(event){
       this.fire('next-month');
@@ -146,46 +147,79 @@ Example:
     _prevMonth: function(event){
       this.fire('prev-month');
     },
+    _nextYear: function(event){
+      this.fire('next-year');
+    },
+    _prevYear: function(event){
+      this.fire('prev-year');
+    },
     _setDate: function(event){
-      this.fire('set-date');
+      console.log(this.data)
       //console.log(event.srcElement.valueAsDate)
       //this.$.localData.setDate(event.srcElement.valueAsDate);
     },
     _onClick: function(event){
       var target = event.target;
-      itemId= parseInt(target.id)+1;
-      this.sharedElements={
-        'ripple': target,
-        'hero': target
-      };
-      this.fire('cal-click',itemId)
+      itemId= parseInt(target.id);
+      this.fire('cal-click',itemId);
+      var detail = this.queryAllEffectiveChildren(".detailElement")[0];
+      detail.setAttribute('data',JSON.stringify(this.data.selected));
+      this.$.detailDialog.open();
     },
     //Creates the header with the days of the week. Dependant on wether Monday starts the week or if the weekends are hidden.
    _setWeekDays: function(hideWeekends, mondayFirst) {
       if(hideWeekends){
-        return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        return ["Mon", "Tues", "Wed", "Thur", "Fri"]
       }
       else if(mondayFirst){
-        return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        return ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"]
       }
-       else return ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Satruday"]
+       else return ["Sun","Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
     },  
     //Builds the week assuming that all weeks are full and that the order of dates corresponds with the properties (no data is checked).
     _buildWeek: function(){
-      this.daysOfWeek = this._setWeekDays(this.data.settings.hideWeekends, this.data.settings.mondayFirst)
-      var days=this.queryAllEffectiveChildren(".daysOfCal");
-      daysInWeek = this.daysOfWeek.length;
-      for(var i=0; i<Math.floor(days.length/daysInWeek) ;i++){
-        var week = document.createElement("div");
-        week.id = "week" + i;
-        week.className = "container week";
-        for(var j=daysInWeek*i; j<daysInWeek*i+daysInWeek; j++){
-          week.appendChild(days[j]);
+      this.daysOfWeek = this._setWeekDays(this.data.settings.hideWeekends, this.data.settings.mondayFirst);
+      var daysInWeek = this.daysOfWeek.length;
+      var days = this.data.month.days;
+      if(this.daysEl && days.length != this.daysEl.length){
+        this.init = false;
+        if(this.daysEl){
+          var calendarEl = this.$.calendar;
+          console.log(calendarEl)
+          for(var i = calendarEl.children.length-1; i>1; i--){
+            console.log(calendarEl.children[i]);
+            calendarEl.removeChild(calendarEl.children[i]);
+          }
         }
-        Polymer.dom(this.$["calendar"]).appendChild(week)
-        Polymer.dom.flush();
       }
-      //Polymer.dom(this.$["calendar"]).removeChild("week1");
+      if(this.init){
+        for(var j=0; j<days.length; j++){
+          this.daysEl[j].data = this.data.month.days[this.daysEl[j].id];
+        }
+      }
+      else{
+        this.init = true;
+        this.daysEl = new Array;
+        var temp = this.queryAllEffectiveChildren(".dayElements");
+        var calendarEl = this.$.calendar;
+        calendarEl.removeChild(calendarEl.children[1]);
+        for(var i=0; i<Math.floor(days.length/daysInWeek) ;i++){
+          var week = document.createElement("div");
+          week.id = "week" + i;
+          week.className = "container week";
+          for(var j=daysInWeek*i; j<daysInWeek*i+daysInWeek; j++){
+            this.daysEl[j] = document.createElement(temp[0].localName);
+            this.daysEl[j].id = j;
+            this.daysEl[j].data = this.data.month.days[this.daysEl[j].id];
+            week.appendChild(this.daysEl[j]);
+          }
+          Polymer.dom(this.$["calendar"]).appendChild(week)
+          Polymer.dom.flush();
+
+        }
+
+        //Polymer.dom(this.$["calendar"]).removeChild("week1");
+      }
     }
 
   });
